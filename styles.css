@@ -1,0 +1,369 @@
+@charset "UTF-8";
+/**
+Нормализация блочной модели
+*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/**
+Убираем внутренние отступы слева тегам списков,
+у которых есть атрибут class
+*/
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+Убираем внешние отступы body и двум другим тегам,
+у которых есть атрибут class
+*/
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+	Убираем внешние отступы вертикали нужным тегам,
+	у которых есть атрибут class
+*/
+:where(h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+	Убираем стандартный маркер маркированному списку,
+	у которого есть атрибут class
+*/
+:where(ul[class]) {
+  list-style: none;
+}
+
+:where(address[class]) {
+  font-style: normal;
+}
+
+/**
+	Обнуляем вертикальные внешние отступы параграфа,
+	объявляем локальную переменную для внешнего отступа вниз,
+	чтобы избежать взаимодействие с более сложным селектором
+*/
+p {
+  --paragraphMarginBottom: 24px;
+  margin-block: 0;
+}
+
+/**
+	Внешний отступ вниз для параграфа без атрибута class,
+	который расположен не последним среди своих соседних элементов
+*/
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+/**
+	Упрощаем работу с изображениями и видео
+*/
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+	Наследуем свойства шрифт для полей ввода
+*/
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+  Пригодится в большинстве ситуаций
+  (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+  height: 100%;
+  /**
+  Убираем скачок интерфейса по горизонтали
+  при появлении / исчезновении скроллбара
+  */
+  scrollbar-gutter: stable;
+}
+
+/**
+	Плавный скролл
+*/
+html,
+:has(:target) {
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+  Пригодится в большинстве ситуаций
+  (когда, например, нужно будет "прижать" футер к низу сайта)
+  */
+  min-height: 100%;
+  /**
+  Унифицированный интерлиньяж
+  */
+  line-height: 1.5;
+}
+
+/**
+	Нормализация высоты элемента ссылки при его инспектировании в DevTools
+*/
+a:where([class]) {
+  display: inline-flex;
+}
+
+/**
+	Курсор-рука при наведении на элемент
+*/
+button,
+label {
+  cursor: pointer;
+}
+
+/**
+	Приводим к единому цвету svg-элементы
+	(за исключением тех, у которых уже указан
+	атрибут fill со значением 'none' или начинается с 'url')
+*/
+:where([fill]:not([fill=none],
+[fill^=url])) {
+  fill: currentColor;
+}
+
+/**
+	Приводим к единому цвету svg-элементы
+	(за исключением тех, у которых уже указан
+	атрибут stroke со значением 'none')
+*/
+:where([stroke]:not([stroke=none],
+[stroke^=url])) {
+  stroke: currentColor;
+}
+
+/**
+	Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+*/
+svg * {
+  transition-property: fill, stroke;
+}
+
+/**
+	Приведение рамок таблиц в классический 'collapse' вид
+*/
+:where(table) {
+  border-collapse: collapse;
+  border-color: currentColor;
+}
+
+/**
+	Удаляем все анимации и переходы для людей,
+	которые предпочитают их не использовать
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kanit";
+  src: url("/fonts/kanit-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kanit";
+  src: url("/fonts/kanit-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+/* Миксин, который расчитывает динамически размер шрифта,
+средний параметр(рекомендуемое значение) расчитывается исходя из
+первого параметра делённого на максимальную
+ширину лендинга помноженного на 100% высоту экрана
+*/
+/* Миксин для тегов наследования цвета от родителя
+и сброс нижнего подчёркивания ссылок
+*/
+/* Миксин для сброса дефолтных
+свойств у кнопок
+*/
+/* Миксин для задания блоку или строчному объекту
+нужный дисплей + центрирование 
+*/
+/* Миксин для центрирования
+у псевдоэлементов
+*/
+/* Миксин, который настраивает изображение 
+в равные пропорции
+*/
+:root {
+  --color-purple: #6C63FF;
+  --color-purple-dark: #5850DD;
+  --color-white: #F7F7F7;
+  --color-dark: #252525;
+  --color-red: #E50000;
+  --color-input: #C3C1E5;
+  --color-input-dark: #666666;
+  --border: 1px solid var(--color-purple);
+  --border-radius: 5px;
+  --border-radius-small: 2px;
+  --border-radius-large: 16px;
+  --font-famaly-base:"Kanit", sans-serif;
+  --container-width: 750px;
+  --container-padding-x: 16px;
+  --section-padding-y: 30px;
+  --block-padding-y: 18px;
+  --block-padding-x: 16px;
+  --inter-height: 38px;
+  --transition-duration: .2s;
+}
+
+.container {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 767px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .visible-mobile {
+    display: none !important;
+  }
+}
+
+body {
+  font-size: clamp(16px, 1.3888888889vw, 20);
+  font-family: var(--font-famaly-base);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-dark);
+  background-color: var(--color-white);
+}
+
+a, button, input, select, textarea, svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: clamp(24px, 1.8055555556vw, 26);
+}
+
+h2 {
+  font-size: clamp(18px, 1.3888888889vw, 20);
+}
+
+.input {
+  width: 595px;
+  height: var(--inter-height);
+  padding: 11px 16px;
+  border-radius: var(--border-radius);
+  border: var(--border);
+  background-color: var(--color-white);
+  outline: none;
+}
+.input::placeholder {
+  font-size: clamp(14px, 1.1111111111vw, 16);
+  font-family: "Inter";
+}
+.input:focus {
+  outline: 2px solid rgba(108, 99, 255, 0.3);
+}
+
+.select {
+  height: var(--inter-height);
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: none;
+  background-color: var(--color-purple);
+  color: var(--color-white);
+  outline: none;
+}
+.select:focus {
+  outline: 2px solid rgba(108, 99, 255, 0.3);
+}
+
+.header__body {
+  padding-top: 40px;
+  text-align: center;
+}
+.header__title:not(:last-child) {
+  margin-bottom: var(--block-padding-y);
+}
+.header__form {
+  display: flex;
+  justify-content: center;
+  column-gap: var(--block-padding-x);
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,60 @@
+@use 'sass:math';
+/* Миксин, который расчитывает динамически размер шрифта,
+средний параметр(рекомендуемое значение) расчитывается исходя из
+первого параметра делённого на максимальную
+ширину лендинга помноженного на 100% высоту экрана
+*/
+@mixin fluid-text ($max: 48, $min: 16) {
+	font-size: clamp(#{$min}px, #{math.div($max,1440) * 100}vw, #{$max});
+}
+
+/* Миксин для тегов наследования цвета от родителя
+и сброс нижнего подчёркивания ссылок
+*/
+@mixin reset-link {
+	color: inherit;
+
+	&, &:hover {
+		text-decoration: none;
+	}
+}
+
+/* Миксин для сброса дефолтных
+свойств у кнопок
+*/
+@mixin reset-btn {
+	padding: 0;
+	background-color: transparent;
+	border: none;
+}
+
+/* Миксин для задания блоку или строчному объекту
+нужный дисплей + центрирование 
+*/
+@mixin flex-center ($isInline: false) {
+	@if $isInline {
+		display: inline-flex;
+	} @else {
+		display: flex;
+	}
+	justify-content: center;
+	align-items: center;
+}
+
+/* Миксин для центрирования
+у псевдоэлементов
+*/
+@mixin abs-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+}
+
+/* Миксин, который настраивает изображение 
+в равные пропорции
+*/
+@mixin square($size) {
+	width: $size;
+	aspect-ratio: 1;
+}

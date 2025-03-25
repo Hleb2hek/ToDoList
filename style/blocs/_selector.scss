@@ -1,0 +1,14 @@
+@use '../base/index' as *;
+
+.select {
+	height: var(--inter-height);
+	padding: 10px;
+	border-radius: var(--border-radius);
+	border: none;
+	background-color: var(--color-purple);
+	color: var(--color-white);
+	outline: none;
+	&:focus {
+		outline: 2px solid rgba(#6C63FF, .3);
+	}
+}

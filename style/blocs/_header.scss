@@ -1,0 +1,18 @@
+@use '../base/index' as *;
+
+.header {
+	&__body {
+		padding-top: 40px ;
+		text-align: center;
+	}
+	&__title {
+		&:not(:last-child) {
+			margin-bottom: var(--block-padding-y);
+		}
+	}
+	&__form {
+		display: flex;
+		justify-content: center;
+		column-gap: var(--block-padding-x);
+	}
+}

@@ -1,0 +1,7 @@
+@forward 'reset';
+@forward 'fonts';
+@forward 'mixins'; // миксины
+@forward 'media'; // медиа запросы
+@forward 'variables'; // переменные
+@forward 'utils'; // утилиты (классы, которые будут применяться в макете)
+@forward 'globals'; // глобальные стили (на весь макет)

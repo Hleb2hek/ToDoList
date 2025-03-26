@@ -1,13 +1,23 @@
 @use '../base/index' as *;
 
 .select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	max-width: 85px;
 	height: var(--inter-height);
-	padding: 10px;
+	padding-left: 10px;
+
 	border-radius: var(--border-radius);
 	border: none;
+
 	background-color: var(--color-purple);
 	color: var(--color-white);
+
 	outline: none;
+
+	
 	&:focus {
 		outline: 2px solid rgba(#6C63FF, .3);
 	}

@@ -15,4 +15,20 @@
 		justify-content: center;
 		column-gap: var(--block-padding-x);
 	}
+
+	&__wrapper {
+		position: relative;
+		display: inline-block;
+	}
+
+	&__arrow {
+		width: 6px;
+		height: 3px;
+		position: absolute;
+		display: inline-block;
+		top: 50%;
+		right: 10px;
+		background: url(https://stackoverflow.com/favicon.ico) right / 90% no-repeat #FFF;
+	}
+
 }

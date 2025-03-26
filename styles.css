@@ -341,8 +341,12 @@ h2 {
 }
 
 .select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  max-width: 85px;
   height: var(--inter-height);
-  padding: 10px;
+  padding-left: 10px;
   border-radius: var(--border-radius);
   border: none;
   background-color: var(--color-purple);
@@ -364,6 +368,19 @@ h2 {
   display: flex;
   justify-content: center;
   column-gap: var(--block-padding-x);
+}
+.header__wrapper {
+  position: relative;
+  display: inline-block;
+}
+.header__arrow {
+  width: 6px;
+  height: 3px;
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  right: 10px;
+  background: url(https://stackoverflow.com/favicon.ico) right/90% no-repeat #FFF;
 }
 
 /*# sourceMappingURL=styles.css.map */

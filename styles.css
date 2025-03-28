@@ -241,14 +241,18 @@ svg * {
 в равные пропорции
 */
 :root {
+  --color-purple-light: #aba6ff;
   --color-purple: #6C63FF;
   --color-purple-dark: #5850DD;
   --color-white: #F7F7F7;
   --color-dark: #252525;
+  --color-red-light: #ff9b9b;
   --color-red: #E50000;
   --color-input: #C3C1E5;
   --color-input-dark: #666666;
+  --color-option: #CDCDCD;
   --border: 1px solid var(--color-purple);
+  --outline: 2px solid var(--color-purple);
   --border-radius: 5px;
   --border-radius-small: 2px;
   --border-radius-large: 16px;
@@ -259,7 +263,7 @@ svg * {
   --block-padding-y: 18px;
   --block-padding-x: 16px;
   --inter-height: 38px;
-  --transition-duration: .2s;
+  --transition-duration: .1s;
 }
 
 .container {
@@ -281,20 +285,20 @@ svg * {
   overflow: hidden !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 735px) {
   .hidden-mobile {
     display: none !important;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 736px) {
   .visible-mobile {
     display: none !important;
   }
 }
 
 body {
-  font-size: clamp(16px, 1.3888888889vw, 20);
+  font-size: clamp(16px, 1.3888888889vw, 20px);
   font-family: var(--font-famaly-base);
   font-weight: 400;
   line-height: 1;
@@ -316,35 +320,60 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: clamp(24px, 1.8055555556vw, 26);
+  font-size: clamp(24px, 1.8055555556vw, 26px);
 }
 
 h2 {
-  font-size: clamp(18px, 1.3888888889vw, 20);
+  font-size: clamp(18px, 1.3888888889vw, 20px);
 }
 
 .input {
-  width: 595px;
+  font-size: clamp(14px, 1.1111111111vw, 16px);
   height: var(--inter-height);
   padding: 11px 16px;
   border-radius: var(--border-radius);
   border: var(--border);
   background-color: var(--color-white);
+  color: var(--color-dark);
   outline: none;
 }
 .input::placeholder {
-  font-size: clamp(14px, 1.1111111111vw, 16);
+  font-size: clamp(14px, 1.1111111111vw, 16px);
   font-family: "Inter";
+  color: var(--color-input);
 }
 .input:focus {
   outline: 2px solid rgba(108, 99, 255, 0.3);
 }
+.input.input__checkbox {
+  width: 26px;
+  height: 26px;
+  appearance: none;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border: var(--border);
+}
+.input.input__checkbox:focus {
+  content: "";
+  position: relative;
+  background: url("/icon/galka.svg") center no-repeat;
+  background-color: var(--color-purple);
+}
+@media (hover: hover) {
+  .input.input__checkbox:hover {
+    border: 2px solid var(--color-purple);
+  }
+}
+@media (hover: none) {
+  .input.input__checkbox:active {
+    border: 2px solid var(--color-purple);
+  }
+}
 
 .select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  max-width: 85px;
+  font-size: clamp(14px, 1.1111111111vw, 16px);
+  width: 93px;
   height: var(--inter-height);
   padding-left: 10px;
   border-radius: var(--border-radius);
@@ -354,7 +383,69 @@ h2 {
   outline: none;
 }
 .select:focus {
-  outline: 2px solid rgba(108, 99, 255, 0.3);
+  outline: 2px solid var(--color-purple);
+  outline-offset: -1px;
+  background-color: var(--color-purple-dark);
+}
+
+.btn {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline-offset: -1px;
+  width: 38px;
+  aspect-ratio: 1;
+  position: relative;
+  background-color: var(--color-purple);
+  border-radius: var(--border-radius);
+}
+.btn > svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  fill: var(--color-white);
+}
+.btn:focus {
+  background-color: var(--color-purple-dark);
+}
+.btn.btn__circle {
+  border-radius: 50%;
+}
+.btn.btn__circle:focus {
+  outline: var(--outline);
+}
+.btn.btn__option {
+  width: 18px;
+  aspect-ratio: 1;
+  background: none;
+  stroke: var(--color-option);
+}
+@media (hover: hover) {
+  .btn.btn__option--pen:hover {
+    stroke: var(--color-purple-light);
+  }
+}
+@media (hover: none) {
+  .btn.btn__option--pen:active {
+    stroke: var(--color-purple-light);
+  }
+}
+.btn.btn__option--pen:focus {
+  stroke: var(--color-purple);
+}
+@media (hover: hover) {
+  .btn.btn__option--trash:hover {
+    stroke: var(--color-red-light);
+  }
+}
+@media (hover: none) {
+  .btn.btn__option--trash:active {
+    stroke: var(--color-red-light);
+  }
+}
+.btn.btn__option--trash:focus {
+  stroke: var(--color-red);
 }
 
 .header__body {
@@ -369,18 +460,70 @@ h2 {
   justify-content: center;
   column-gap: var(--block-padding-x);
 }
-.header__wrapper {
-  position: relative;
-  display: inline-block;
+@media (max-width: 735px) {
+  .header__form {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: var(--block-padding-y);
+  }
 }
-.header__arrow {
-  width: 6px;
-  height: 3px;
-  position: absolute;
-  display: inline-block;
-  top: 50%;
-  right: 10px;
-  background: url(https://stackoverflow.com/favicon.ico) right/90% no-repeat #FFF;
+.header__input {
+  width: 595px;
+}
+@media (max-width: 735px) {
+  .header__input {
+    width: 725px;
+    max-width: 100%;
+  }
+}
+
+.hero__body {
+  position: relative;
+  display: flex;
+  column-gap: 57px;
+  padding-top: var(--section-padding-y);
+}
+@media (max-width: 735px) {
+  .hero__body {
+    column-gap: 0;
+    flex-direction: column;
+  }
+}
+.hero__menu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.hero__list {
+  width: 100%;
+}
+.hero__description {
+  display: flex;
+  column-gap: 17px;
+}
+.hero__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero__description {
+  align-items: center;
+}
+.hero__btn {
+  align-self: end;
+  position: fixed;
+  top: 80%;
+  left: 75%;
+  width: 50px;
+  height: 50px;
+}
+@media (max-width: 735px) {
+  .hero__btn {
+    width: 40px;
+    height: 40px;
+    align-self: center;
+    margin-top: var(--section-padding-y);
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

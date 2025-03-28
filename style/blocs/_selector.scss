@@ -1,11 +1,12 @@
 @use '../base/index' as *;
 
 .select {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
+	@include fluid-text (16,14);
+	// -webkit-appearance: none;
+	// -moz-appearance: none;
+	// appearance: none;
 
-	max-width: 85px;
+	width: 93px;
 	height: var(--inter-height);
 	padding-left: 10px;
 
@@ -19,6 +20,9 @@
 
 	
 	&:focus {
-		outline: 2px solid rgba(#6C63FF, .3);
+		outline: 2px solid var(--color-purple);
+		outline-offset: -1px;
+		background-color: var(--color-purple-dark);
 	}
+
 }

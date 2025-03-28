@@ -1,23 +1,47 @@
 @use '../base/index' as *;
 
 .input {
+	@include fluid-text(16,14);
 
-	width: 595px;
 	height: var(--inter-height);
 	padding: 11px 16px;
 	border-radius: var(--border-radius);
 	border: var(--border);
 	background-color: var(--color-white);
+	color: var(--color-dark);
 	outline: none;
 
 	&::placeholder {
-		@include fluid-text (16,14);
-
+		@include fluid-text(16,14);
 		font-family: 'Inter';
+		color: var(--color-input);
 	}
 
 	&:focus {
 		outline: 2px solid rgba(#6C63FF, .3);
+	}
+
+	&.input__checkbox {
+		width: 26px;
+		height: 26px;
+		
+		appearance: none;
+		position: relative;
+		
+		padding: 0;
+		margin: 0;
+		
+		border: var(--border);
+		
+		&:focus {
+			content: "";
+			position: relative;
+			background: url("/icon/galka.svg") center no-repeat;
+			background-color: var(--color-purple);
+		}
+		@include hover {
+			border: 2px solid var(--color-purple);
+		}
 	}
 	
 }

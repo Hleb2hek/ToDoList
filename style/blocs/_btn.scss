@@ -1,0 +1,51 @@
+@use '../base/index' as *;
+
+.btn {
+	@include reset-btn;
+	@include square(38px);
+
+	position: relative;
+	background-color: var(--color-purple);
+	border-radius: var(--border-radius);
+	
+	& > svg {
+		@include abs-center;
+		
+		fill: var(--color-white);
+	}
+
+	&:focus {
+		background-color: var(--color-purple-dark);
+	}
+
+	&.btn__circle {
+		border-radius: 50%;
+
+		&:focus {
+			outline: var(--outline);
+		}
+	}
+	
+	&.btn__option {
+		@include square(18px);
+
+		background:none;
+		stroke: var(--color-option);
+		&--pen {
+			@include hover {
+				stroke: var(--color-purple-light) ;
+			}
+			&:focus {
+				stroke: var(--color-purple);
+			}
+		}
+		&--trash {
+			@include hover {
+				stroke: var(--color-red-light) ;
+			}
+			&:focus {
+				stroke: var(--color-red);
+			}
+		}
+	}
+}

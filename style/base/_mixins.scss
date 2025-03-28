@@ -5,7 +5,7 @@
 ширину лендинга помноженного на 100% высоту экрана
 */
 @mixin fluid-text ($max: 48, $min: 16) {
-	font-size: clamp(#{$min}px, #{math.div($max,1440) * 100}vw, #{$max});
+	font-size: clamp(#{$min}px, #{math.div($max,1440) * 100}vw, #{$max}px);
 }
 
 /* Миксин для тегов наследования цвета от родителя
@@ -26,6 +26,7 @@
 	padding: 0;
 	background-color: transparent;
 	border: none;
+	outline-offset: -1px;
 }
 
 /* Миксин для задания блоку или строчному объекту
@@ -57,4 +58,10 @@
 @mixin square($size) {
 	width: $size;
 	aspect-ratio: 1;
+}
+
+@mixin flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

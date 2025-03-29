@@ -29,5 +29,8 @@
 			max-width: 100%;
 		}
 	}
+	&__btn {
+		@include square(38px);
+	}
 
 }

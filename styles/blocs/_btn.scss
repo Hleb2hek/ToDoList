@@ -1,0 +1,80 @@
+@use '../base/index' as *;
+
+.btn {
+	@include reset-btn;
+	
+	position: relative;
+
+	border-radius: var(--border-radius);
+	
+	background-color: var(--color-purple);
+	color: var(--color-white);
+	
+	font-family: 'Kanit';
+	font-weight: 500;
+	text-transform: uppercase;
+	
+	@include hover {
+		background-color: var(--color-purple-dark);
+	}
+	&:focus {
+		background-color: var(--color-purple-light);
+		outline: 2px solid var(--color-purple);
+
+	}
+	
+	& > svg {
+		@include abs-center;
+		
+		fill: var(--color-white);
+	}
+
+
+	&.btn__circle {
+		border-radius: 50%;
+
+		&:focus {
+			outline: var(--outline);
+		}
+	}
+	
+	&.btn__option {
+		@include square(18px);
+
+		background:none;
+		stroke: var(--color-option);
+		outline: none;
+		&--pen {
+			@include hover {
+				stroke: var(--color-purple-light) ;
+			}
+			&:focus {
+				stroke: var(--color-purple);
+			}
+		}
+		&--trash {
+			@include hover {
+				stroke: var(--color-red-light) ;
+			}
+			&:focus {
+				stroke: var(--color-red);
+			}
+		}
+	}
+	&.btn__reverse {
+		
+		background-color: transparent;
+		border: var(--border);
+		color: var(--color-purple);
+		
+		@include hover {
+			border: 2px solid var(--color-purple-dark);
+			color: var(--color-purple-dark);
+		}
+		&:focus {
+			outline: 3px solid rgba(#6C63FF, 0.4);
+			border: var(--border);
+			color: var(--color-purple-light);
+		}
+	}
+}

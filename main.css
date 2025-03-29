@@ -324,7 +324,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(18px, 1.3888888889vw, 20px);
+  font-size: clamp(18px, 1.6666666667vw, 24px);
 }
 
 .input {
@@ -393,11 +393,27 @@ h2 {
   background-color: transparent;
   border: none;
   outline-offset: -1px;
-  width: 38px;
-  aspect-ratio: 1;
   position: relative;
-  background-color: var(--color-purple);
   border-radius: var(--border-radius);
+  background-color: var(--color-purple);
+  color: var(--color-white);
+  font-family: "Kanit";
+  font-weight: 500;
+  text-transform: uppercase;
+}
+@media (hover: hover) {
+  .btn:hover {
+    background-color: var(--color-purple-dark);
+  }
+}
+@media (hover: none) {
+  .btn:active {
+    background-color: var(--color-purple-dark);
+  }
+}
+.btn:focus {
+  background-color: var(--color-purple-light);
+  outline: 2px solid var(--color-purple);
 }
 .btn > svg {
   position: absolute;
@@ -405,9 +421,6 @@ h2 {
   left: 50%;
   translate: -50% -50%;
   fill: var(--color-white);
-}
-.btn:focus {
-  background-color: var(--color-purple-dark);
 }
 .btn.btn__circle {
   border-radius: 50%;
@@ -420,6 +433,7 @@ h2 {
   aspect-ratio: 1;
   background: none;
   stroke: var(--color-option);
+  outline: none;
 }
 @media (hover: hover) {
   .btn.btn__option--pen:hover {
@@ -446,6 +460,28 @@ h2 {
 }
 .btn.btn__option--trash:focus {
   stroke: var(--color-red);
+}
+.btn.btn__reverse {
+  background-color: transparent;
+  border: var(--border);
+  color: var(--color-purple);
+}
+@media (hover: hover) {
+  .btn.btn__reverse:hover {
+    border: 2px solid var(--color-purple-dark);
+    color: var(--color-purple-dark);
+  }
+}
+@media (hover: none) {
+  .btn.btn__reverse:active {
+    border: 2px solid var(--color-purple-dark);
+    color: var(--color-purple-dark);
+  }
+}
+.btn.btn__reverse:focus {
+  outline: 3px solid rgba(108, 99, 255, 0.4);
+  border: var(--border);
+  color: var(--color-purple-light);
 }
 
 .header__body {
@@ -475,6 +511,10 @@ h2 {
     width: 725px;
     max-width: 100%;
   }
+}
+.header__btn {
+  width: 38px;
+  aspect-ratio: 1;
 }
 
 .hero__body {
@@ -526,4 +566,65 @@ h2 {
   }
 }
 
-/*# sourceMappingURL=styles.css.map */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  padding: 30px 16px;
+  background-color: color-mix(in srgb, var(--color-dark) 70%, transparent);
+  cursor: pointer;
+  overflow-y: auto;
+}
+.modal__main {
+  /*
+  Крч, если в modal просто прописать display:flex и в его дочернем элементе
+  margin: auto то этот элемент расположиться по центру, оставлю как один из способов
+  позиционирования
+  */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 290px;
+  padding: 18px 30px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-large);
+  cursor: default;
+}
+@media (max-width: 735px) {
+  .modal__main {
+    max-width: 100%;
+  }
+}
+.modal__title {
+  text-align: center;
+}
+.modal__title:not(:last-child) {
+  margin-bottom: 25px;
+}
+.modal__input {
+  width: 440px;
+}
+@media (max-width: 735px) {
+  .modal__input {
+    max-width: 100%;
+  }
+}
+.modal__inner {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.modal__btn {
+  width: 110px;
+  height: 38px;
+}
+@media (max-width: 735px) {
+  .modal__btn {
+    max-width: 100%;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

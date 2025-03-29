@@ -1,0 +1,73 @@
+@use '../base/index' as *;
+
+.modal {
+	@include flex-center ($isInline: false);
+
+	// Выносим за пределы потока элементов, тем самым заполняем всё окно
+	position: fixed;
+	// Прижимаем элемент к левому верхнему краю окна браузера
+	inset: 0;
+	padding: 30px 16px;
+
+	// Для того, чтобы сделать фон полупрозрачным и с использованием переменной
+	// используется color-mix
+	background-color: color-mix(in srgb, var(--color-dark) 70%, transparent);
+
+	cursor: pointer;
+	
+	overflow-y: auto;
+
+	&__main {
+		/*
+		Крч, если в modal просто прописать display:flex и в его дочернем элементе
+		margin: auto то этот элемент расположиться по центру, оставлю как один из способов
+		позиционирования
+		*/
+
+		position: relative;
+		display: flex;
+		flex-direction: column;
+
+		width: 500px;
+		height: 290px;
+		padding: 18px 30px;
+
+		background-color: var(--color-white);
+		border-radius: var(--border-radius-large);
+
+		cursor: default;
+
+		@include mobile {
+			max-width: 100%;
+		}
+	}
+
+	&__title {
+		text-align: center;
+		&:not(:last-child) {
+			margin-bottom: 25px;
+		}
+	}
+
+	&__input {
+		width: 440px;
+
+		@include mobile {
+			max-width: 100%;
+		}
+	}
+
+	&__inner {
+		display: flex;
+		justify-content: space-between;
+		// Прижимаем кнопки вниз
+		margin-top: auto;
+	}
+	&__btn {
+		width: 110px;
+		height: 38px;
+		@include mobile {
+			max-width: 100%;
+		}
+	}
+}

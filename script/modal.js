@@ -1,7 +1,7 @@
+
 const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	const btnElemOpen = document.querySelector(btnOpen);
 	const btnElemClose = document.querySelector(btnClose);
-	// const btnElemApply = document.querySelector('[data-btn-apply]');
 	
 	const modalElem = document.querySelector(modalWindow);
 	
@@ -13,10 +13,10 @@ const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	`;
 	
 	const closeModal = event => {
-		const target = event.target;
+		const target = event.target
 		if (
 			target === btnElemClose ||
-			target.closest(modalWindow) ||
+			target === modalElem ||
 			event.code === 'Escape'
 		){
 			modalElem.style.opacity = 0;

@@ -29,6 +29,10 @@
 	
 	&__item {
 		@include flex;
+		padding-block: 17px;
+		&:not(:last-child) {
+			border-bottom: 1px solid color-mix(in srgb, var(--color-purple) 50%, transparent);
+		}
 	}
 
 	&__description {

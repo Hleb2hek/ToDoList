@@ -43,5 +43,23 @@
 			border: 2px solid var(--color-purple);
 		}
 	}
+	&.input__warning {
+
+		outline: 2px solid color-mix(in srgb, var(--color-red) 40%, transparent);
+		border: 1px solid var(--color-red);
+
+		&::placeholder {
+			color: var(--color-red);
+		}
+		&::-webkit-input-placeholder {
+			color: var(--color-red);
+		}
+		&::-moz-placeholder {
+			color: var(--color-red);
+		}
+		&:-ms-input-placeholder {
+			color: var(--color-red);
+		}
+	}
 	
 }

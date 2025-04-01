@@ -17,6 +17,8 @@
 	
 	overflow-y: auto;
 
+	transition: .1s;
+
 	&__main {
 		/*
 		Крч, если в modal просто прописать display:flex и в его дочернем элементе
@@ -50,6 +52,7 @@
 	}
 
 	&__input {
+		height: auto;
 		width: 440px;
 
 		@include mobile {
@@ -69,5 +72,11 @@
 		@include mobile {
 			max-width: 100%;
 		}
+	}
+
+	&__text {
+		margin-top: 20px;
+		text-align: center;
+		color: var(--color-red);
 	}
 }

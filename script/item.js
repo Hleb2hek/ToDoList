@@ -1,9 +1,14 @@
+
+
+// Изолируем код
 const setingsItem = function() {
+	// переменная ul.hero__list
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 
-	const btnElemClose = document.querySelector('[data-btn-apply]');
-	const btnApply = document.querySelector('[data-btn-apply]');
+	// переменная button.hero__btn.btn
+	const btnElemApply = document.querySelector('[data-btn-apply]');
 
+	// input.modal__input.input
 	const inputElement = document.querySelector('[data-modal-input]');
 
 	const createItem = function() {
@@ -19,7 +24,7 @@ const setingsItem = function() {
 				textElement.classList.add('modal__text');
 				inputElement.classList.add('input__warning');
 
-				btnApply.disabled = true;
+				btnElemApply.disabled = true;
 
 				textElement.innerHTML = 'The input field is empty';
 				setTimeout (() => {
@@ -33,7 +38,7 @@ const setingsItem = function() {
 		}
 
 		inputElement.classList.remove('input__warning')
-		btnApply.disabled = false;
+		btnElemApply.disabled = false;
 
 		if (warningText) {
 			warningText.remove();
@@ -63,9 +68,9 @@ const setingsItem = function() {
 		inputElement.value = '';
 	}
 	inputElement.addEventListener('input', () => {
-		btnApply.disabled = inputElement.value.trim() === '';
+		btnElemApply.disabled = inputElement.value.trim() === '';
 	})
-	btnElemClose.addEventListener('click',createItem);
+	btnElemApply.addEventListener('click',createItem);
 
 }
 

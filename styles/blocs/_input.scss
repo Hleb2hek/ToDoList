@@ -7,18 +7,18 @@
 	padding: 11px 16px;
 	border-radius: var(--border-radius);
 	border: var(--border);
-	background-color: var(--color-white);
-	color: var(--color-dark);
+	background-color: var(--color-background-s);
+	color: var(--color-accent);
 	outline: none;
 
 	&::placeholder {
 		@include fluid-text(16,14);
 		font-family: 'Inter';
-		color: var(--color-input);
+		color: var(--color-input-placeholder);
 	}
 
 	&:focus {
-		outline: 2px solid rgba(#6C63FF, .3);
+		outline: 2px solid color-mix(in srgb, var(--color-input-focus) 30%, transparent);
 	}
 
 	&.input__checkbox {
@@ -31,9 +31,10 @@
 		padding: 0;
 		margin: 0;
 		
-		border: var(--border);
+		border: 1px solid var(--color-purple);
 		
 		&:focus {
+			outline: none;
 			content: "";
 			position: relative;
 			background: url("/icon/galka.svg") center no-repeat;

@@ -1,0 +1,19 @@
+@use '../base/index' as *;
+
+.theme {
+	button:last-child {
+		display: none;
+	}
+	&__btn {
+		@include square(38px);
+	}
+}
+
+.darkmode .theme {
+	button:first-child {
+		display: none;
+	}
+	button:last-child {
+		display: block;
+	}
+}

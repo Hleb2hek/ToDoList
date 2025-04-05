@@ -241,17 +241,48 @@ svg * {
 в равные пропорции
 */
 :root {
+  --color-background-s: #F7F7F7;
+  --color-accent: #252525;
+  --color-input-background: #6C63FF;
+  --color-input-placeholder: #C3C1E5;
+  --color-input-focus: #6C63FF;
+  --color-input-dark: #666666;
   --color-purple-light: #aba6ff;
   --color-purple: #6C63FF;
   --color-purple-dark: #5850DD;
-  --color-white: #F7F7F7;
   --color-dark: #252525;
   --color-red-light: #ff9b9b;
   --color-red: #E50000;
-  --color-input: #C3C1E5;
-  --color-input-dark: #666666;
   --color-option: #CDCDCD;
-  --border: 1px solid var(--color-purple);
+  --border: 1px solid var(--color-input-background);
+  --outline: 2px solid var(--color-purple);
+  --border-radius: 5px;
+  --border-radius-small: 2px;
+  --border-radius-large: 16px;
+  --font-famaly-base:"Kanit", sans-serif;
+  --container-width: 750px;
+  --container-padding-x: 16px;
+  --section-padding-y: 30px;
+  --block-padding-y: 18px;
+  --block-padding-x: 16px;
+  --inter-height: 38px;
+  --transition-duration: .1s;
+}
+
+.darkmode {
+  --color-background-s: #252525;
+  --color-accent:#F7F7F7;
+  --color-input-background:#F7F7F7;
+  --color-input-placeholder: #666666;
+  --color-input-focus: #F7F7F7;
+  --color-purple-light: #aba6ff;
+  --color-purple: #6C63FF;
+  --color-purple-dark: #5850DD;
+  --color-red-light: #ff9b9b;
+  --color-red: #E50000;
+  --color-option: #CDCDCD;
+  --border: 1px solid var(--color-input-background);
+  --border-btn: 1px solid var(--color-purple);
   --outline: 2px solid var(--color-purple);
   --border-radius: 5px;
   --border-radius-small: 2px;
@@ -302,8 +333,8 @@ body {
   font-family: var(--font-famaly-base);
   font-weight: 400;
   line-height: 1;
-  color: var(--color-dark);
-  background-color: var(--color-white);
+  color: var(--color-accent);
+  background-color: var(--color-background-s);
 }
 
 a, button, input, select, textarea, svg * {
@@ -333,17 +364,17 @@ h2 {
   padding: 11px 16px;
   border-radius: var(--border-radius);
   border: var(--border);
-  background-color: var(--color-white);
-  color: var(--color-dark);
+  background-color: var(--color-background-s);
+  color: var(--color-accent);
   outline: none;
 }
 .input::placeholder {
   font-size: clamp(14px, 1.1111111111vw, 16px);
   font-family: "Inter";
-  color: var(--color-input);
+  color: var(--color-input-placeholder);
 }
 .input:focus {
-  outline: 2px solid rgba(108, 99, 255, 0.3);
+  outline: 2px solid color-mix(in srgb, var(--color-input-focus) 30%, transparent);
 }
 .input.input__checkbox {
   width: 26px;
@@ -352,9 +383,10 @@ h2 {
   position: relative;
   padding: 0;
   margin: 0;
-  border: var(--border);
+  border: 1px solid var(--color-purple);
 }
 .input.input__checkbox:focus {
+  outline: none;
   content: "";
   position: relative;
   background: url("/icon/galka.svg") center no-repeat;
@@ -395,7 +427,7 @@ h2 {
   border-radius: var(--border-radius);
   border: none;
   background-color: var(--color-purple);
-  color: var(--color-white);
+  color: #F7F7F7;
   outline: none;
 }
 .select:focus {
@@ -412,7 +444,7 @@ h2 {
   position: relative;
   border-radius: var(--border-radius);
   background-color: var(--color-purple);
-  color: var(--color-white);
+  color: #F7F7F7;
   font-family: "Kanit";
   font-weight: 500;
   text-transform: uppercase;
@@ -439,7 +471,7 @@ h2 {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  fill: var(--color-white);
+  fill: #F7F7F7;
 }
 .btn.btn__circle {
   border-radius: 50%;
@@ -452,7 +484,11 @@ h2 {
   aspect-ratio: 1;
   background: none;
   stroke: var(--color-option);
+  fill: none;
   outline: none;
+}
+.btn.btn__option > svg {
+  fill: none;
 }
 @media (hover: hover) {
   .btn.btn__option--pen:hover {
@@ -482,7 +518,7 @@ h2 {
 }
 .btn.btn__reverse {
   background-color: transparent;
-  border: var(--border);
+  border: var(--border-btn);
   color: var(--color-purple);
 }
 @media (hover: hover) {
@@ -530,10 +566,6 @@ h2 {
     width: 725px;
     max-width: 100%;
   }
-}
-.header__btn {
-  width: 38px;
-  aspect-ratio: 1;
 }
 
 .hero__body {
@@ -596,7 +628,7 @@ h2 {
   position: fixed;
   inset: 0;
   padding: 30px 16px;
-  background-color: color-mix(in srgb, var(--color-dark) 70%, transparent);
+  background-color: color-mix(in srgb, #252525 70%, transparent);
   cursor: pointer;
   overflow-y: auto;
   transition: 0.1s;
@@ -613,7 +645,8 @@ h2 {
   width: 500px;
   height: 290px;
   padding: 18px 30px;
-  background-color: var(--color-white);
+  background-color: var(--color-background-s);
+  border: 1px solid var(--color-input-background);
   border-radius: var(--border-radius-large);
   cursor: default;
 }
@@ -655,6 +688,21 @@ h2 {
   margin-top: 20px;
   text-align: center;
   color: var(--color-red);
+}
+
+.theme button:last-child {
+  display: none;
+}
+.theme__btn {
+  width: 38px;
+  aspect-ratio: 1;
+}
+
+.darkmode .theme button:first-child {
+  display: none;
+}
+.darkmode .theme button:last-child {
+  display: block;
 }
 
 /*# sourceMappingURL=main.css.map */

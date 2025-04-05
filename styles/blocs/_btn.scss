@@ -8,7 +8,7 @@
 	border-radius: var(--border-radius);
 	
 	background-color: var(--color-purple);
-	color: var(--color-white);
+	color: #F7F7F7;
 	
 	font-family: 'Kanit';
 	font-weight: 500;
@@ -29,7 +29,7 @@
 	& > svg {
 		@include abs-center;
 		
-		fill: var(--color-white);
+		fill: #F7F7F7;
 	}
 
 
@@ -46,7 +46,11 @@
 
 		background:none;
 		stroke: var(--color-option);
+		fill: none;
 		outline: none;
+		& > svg {
+			fill:none
+		}
 		&--pen {
 			@include hover {
 				stroke: var(--color-purple-light) ;
@@ -67,7 +71,7 @@
 	&.btn__reverse {
 		
 		background-color: transparent;
-		border: var(--border);
+		border: var(--border-btn);
 		color: var(--color-purple);
 		
 		@include hover {

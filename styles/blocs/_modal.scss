@@ -11,7 +11,7 @@
 
 	// Для того, чтобы сделать фон полупрозрачным и с использованием переменной
 	// используется color-mix
-	background-color: color-mix(in srgb, var(--color-dark) 70%, transparent);
+	background-color: color-mix(in srgb, #252525 70%, transparent);
 
 	cursor: pointer;
 	
@@ -34,7 +34,8 @@
 		height: 290px;
 		padding: 18px 30px;
 
-		background-color: var(--color-white);
+		background-color: var(--color-background-s);
+		border: 1px solid var(--color-input-background);
 		border-radius: var(--border-radius-large);
 
 		cursor: default;

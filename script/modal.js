@@ -17,7 +17,8 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		transition: opacity .1s ease-in-out;
 	`;
 	
-	const warningWrapper = function(firstText, secondText = null, sec = 1500) {
+	// Повторяющийся код вынесенный в функции
+	function warningWrapper (firstText, secondText = null, sec = 1500) {
 		if(!document.querySelector('.modal__text')) {
 			// Добавить элемент
 			let textElement = document.createElement('p');
@@ -41,69 +42,84 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 			inputElement.insertAdjacentElement('afterend', textElement);
 		}
 	}
+	function hiddenModal () {
+		modalElem.style.opacity = 0;
+		// Через 200ms модалка красиво исчезнет 
+		setTimeout(() => {
+			modalElem.style.visibility = 'hidden';
+		}, 200);
+		// Удаляем обработчик событий для кнопки, чтобы не было висячего обработчика
+		window.removeEventListener('keydown',closeModal);
+	}
 
 	// Функция закрытия 
 	const closeModal = event => {
-		const target = event.target
+		const target = event.target;
 
 		// Если нажата одна из кнопок или клавиш
 		if ( target === btnElemClose || target === modalElem ||event.code === 'Escape') {
-
-			// Делаем модалку не видимной 
-			modalElem.style.opacity = 0;
-			// Через 200ms модалка красиво исчезнет 
-			setTimeout(() => {
-				modalElem.style.visibility = 'hidden';
-			}, 200);
-			// Удаляем обработчик событий для кнопки, чтобы не было висячего обработчика
-			window.removeEventListener('keydown',closeModal);
+			// Делаем модалку не видимной
+			hiddenModal()
 		}
 	}
 	
 	// Функция открытия модалки
-	const showModal = function() {
-		// Добавляем свойства, чтобы было видно модалку
+	function showModal () {
+		/*
+		Добавляем свойства, чтобы было видно модалку
+		и добавляем на модалку обработчик событий
+		*/
 		modalElem.style.visibility = 'visible';
 		modalElem.style.opacity = 1;
-		// Добавляем на модалку обработчик событий
 		window.addEventListener('keydown',closeModal)
 	}
 
 	// Функция на создание динамического элемента
-	const createItem = function() {
-		// Создаём главный дин.элемент
+	function createItem () {
+		/*
+		Создаём главный дин.элемент
+		Даём ему класс
+		*/
 		let liElement = document.createElement('li');
-		// Даём ему класс
 		liElement.className ='hero__item';
-
-		// Полученое значение мы обрабатываем от пробелов
+		/*
+		Полученое значение мы обрабатываем от пробелов
+		Находим родительский элемент inputElement через .modal__text
+		*/
 		let noteTitle = inputElement.value.trim();
-		// Находим родительский элемент inputElement через .modal__text
 		let warningText = inputElement.parentNode.querySelector('.modal__text');
 
 
-		
-		// Если пустая строка
+		/*
+		Если пустая строка и возвращаем результат
+		*/
 		if (noteTitle === '') {
 			warningWrapper('The input field is empty','Enter the task name',1500)
-			// Возвращаем результат
 			return
-		// Если строка превышает 30 символов
+		/*
+		Если строка превышает 30 символов
+		возвращаем результат
+		*/
 		} else if (noteTitle.length > 30) {
 			warningWrapper ('The text is more than 30 characters long')
-			// Возвращаем результат
 			return
 		} else {
-			// Если нет пустой строки, то убираем класс
+			/*
+			Если нет пустой строки, то убираем класс 
+			и зазблокируем кнопку
+			*/
 			inputElement.classList.remove('input__warning')
-			// Разблокировем кнопку
 			btnApply.disabled = false;
 	
 			// Если предупреждающий текст есть, то удалить
 			if (warningText) {
 				warningText.remove();
 			}
-			// Добавляемый динамический элемент
+			/*
+				Добавляемый динамический элемент
+				добавляем конец дочерний элемент liElement
+				обнуляем поле input
+			*/
 			liElement.innerHTML = `
 					<form class="hero__description">
 						<input class="hero__input input input__checkbox" type="checkbox" id="" >
@@ -125,13 +141,26 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 						</svg>
 					</button>
 			`;
-			// Добавляем конец дочерний элемент liElement
 			ulElement.appendChild(liElement);
-			// Обнуляем поле input
 			inputElement.value = '';
-		}
-		
 
+			allItem()
+			hiddenModal()
+		}
+	}
+	function allItem() {
+		const items = document.querySelectorAll('.hero__item');
+		const titles = [];
+
+		items.forEach(item => {
+			const title = item.querySelector('.hero__title');
+			if (title) {
+				titles.push(title.textContent.trim());
+			}
+		});
+
+		console.log('Названия задач:', titles);
+		return titles;
 	}
 
 	inputElement.addEventListener('input', () => {
@@ -141,7 +170,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	
 	btnElemOpen.addEventListener('click', showModal);
 	modalElem.addEventListener('click', closeModal);
-	
+
 	return { showModal }
 
 }

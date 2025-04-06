@@ -87,7 +87,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		*/
 		let noteTitle = inputElement.value.trim();
 		let warningText = inputElement.parentNode.querySelector('.modal__text');
-
+		let saveItem = localStorage.getItem('hero__item')
 
 		/*
 		Если пустая строка и возвращаем результат
@@ -99,8 +99,8 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		Если строка превышает 30 символов
 		возвращаем результат
 		*/
-		} else if (noteTitle.length > 30) {
-			warningWrapper ('The text is more than 30 characters long')
+		} else if (noteTitle.length > 50) {
+			warningWrapper ('The text is more than 50 characters long')
 			return
 		} else {
 			/*
@@ -144,23 +144,26 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 			ulElement.appendChild(liElement);
 			inputElement.value = '';
 
-			allItem()
+			saveAllItem()
 			hiddenModal()
 		}
 	}
-	function allItem() {
+	function saveAllItem() {
+		const dataItem = [];
 		const items = document.querySelectorAll('.hero__item');
-		const titles = [];
 
 		items.forEach(item => {
 			const title = item.querySelector('.hero__title');
-			if (title) {
-				titles.push(title.textContent.trim());
+			const checkbox = item.querySelector('.input__checkbox')
+			if (title && checkbox) {
+				dataItem.push ({
+					text: title.textContent.trim(),
+					checked: checkbox.checked,
+				})
 			}
 		});
 
-		console.log('Названия задач:', titles);
-		return titles;
+		localStorage.setItem('hero__item', JSON.stringify(dataItem));
 	}
 
 	inputElement.addEventListener('input', () => {

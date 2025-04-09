@@ -1,3 +1,4 @@
+import { checkList } from "./item.js";
 
 export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 
@@ -87,7 +88,6 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		*/
 		let noteTitle = inputElement.value.trim();
 		let warningText = inputElement.parentNode.querySelector('.modal__text');
-		let saveItem = localStorage.getItem('hero__item')
 
 		/*
 		Если пустая строка и возвращаем результат
@@ -146,24 +146,25 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 
 			saveAllItem()
 			hiddenModal()
+
+			checkList()
 		}
 	}
 	function saveAllItem() {
-		const dataItem = [];
 		const items = document.querySelectorAll('.hero__item');
-
+		let dataItems = JSON.parse(localStorage.getItem('hero__item')) || {};
+	
 		items.forEach(item => {
 			const title = item.querySelector('.hero__title');
-			const checkbox = item.querySelector('.input__checkbox')
+			const checkbox = item.querySelector('.input__checkbox');
+	
 			if (title && checkbox) {
-				dataItem.push ({
-					text: title.textContent.trim(),
-					checked: checkbox.checked,
-				})
+				const text = title.textContent.trim();
+				dataItems[text] = checkbox.checked;
 			}
 		});
-
-		localStorage.setItem('hero__item', JSON.stringify(dataItem));
+	
+		localStorage.setItem('hero__item', JSON.stringify(dataItems));
 	}
 
 	inputElement.addEventListener('input', () => {
@@ -184,4 +185,4 @@ const modal = modalController({
 	modalWindow: '[data-modal]'
 });
 
-export const { showModal } = modal;
+export const { showModal,saveAllItem } = modal;

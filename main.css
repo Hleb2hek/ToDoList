@@ -617,8 +617,15 @@ h2 {
     width: 40px;
     height: 40px;
     align-self: center;
-    margin-top: var(--section-padding-y);
   }
+}
+.hero__empty-img {
+  margin: auto;
+}
+.hero__empty-descrtiption {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .modal {

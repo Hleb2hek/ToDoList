@@ -1,51 +1,62 @@
 // Импортируем showModal
 import { showModal,saveAllItem } from "./modal.js";
 
-
+// Функция для проверки содержимого
 export function checkList () {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
-	const emptyImg = document.createElement('img');
-	const emptyText = document.createElement('div');
-	
-	emptyImg.src = '/icon/Detective-light.svg';
-	emptyImg.className = 'hero__empty-img';
+		
+	// Находим существующие элементы
+	const emptyImg = ulElement.querySelector('.hero__empty-img');
+	const emptyText = ulElement.querySelector('.hero__empty-description');
 
-	emptyText.className = 'hero__empty-descrtiption'
-	emptyText.innerHTML = `Empty...`
+	const actualChildren = Array.from(ulElement.children).filter(child => 
+		!child.classList.contains('hero__empty-img') && 
+		!child.classList.contains('hero__empty-description')
+	);
 
-	if(ulElement.children.length === 0) {
-		if(!ulElement.querySelector('.hero__empty-img')) {
-			ulElement.appendChild(emptyImg);
-			ulElement.appendChild(emptyText);
+	// Если нет реальных элементов (кроме наших empty-элементов)
+	if (actualChildren.length === 0) {
+		// Добавляем элементы, только если их еще нет
+		if (!emptyImg && !emptyText) {
+			const existImg = document.createElement('img');
+			existImg.src = './icon/Detective-light.svg';
+			existImg.className = 'hero__empty-img';
+
+			const existText = document.createElement('div');
+			existText.className = 'hero__empty-description';
+			existText.textContent = 'Empty...';
+
+			ulElement.append(existImg, existText);
 		}
 	} else {
-		const existImg = ulElement.querySelector('.hero__empty-img');
-		const existText = ulElement.querySelector('.hero__empty-descrtiption');
-		if(existImg) {
-			existImg.remove()
-		}
-		if(existText) {
-			existText.remove()
-		}
+		// Удаляем empty-элементы, если они есть и появились реальные данные
+		emptyImg?.remove();
+		emptyText?.remove();
 	}
 }
 
 function loadLocalStorage() {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
+	// Достаём из JSON ключ
 	const parseJSONElement = JSON.parse(localStorage.getItem('hero__item'));
 
-	if (!parseJSONElement ) return ;
+	// Если нет ключа, то вернуть, чтоб ошибки не было
+	if (!parseJSONElement ) {
+		ulElement.innerHTML = '';
+		checkList(); // Важно: вызов здесь!
+		return;
+	} ;
 
+	// Для удобства
 	const entries = Object.entries(parseJSONElement);
 
-	ulElement.innerHTML = '';
-
-
+	// разбиваем на ключ и значение
 	for(const [key,value] of entries){
 
+		// загружаем(создаём) список и даём ему клас
 		let liElement = document.createElement('li');
 		liElement.className ='hero__item';
-
+		// задаём внутренности
 		liElement.innerHTML = `
 			<form class="hero__description">
 				<input class="hero__input input input__checkbox" type="checkbox" ${value ? 'checked' : ''}>
@@ -68,8 +79,10 @@ function loadLocalStorage() {
 				</button>
 			</div>
 			`;
+		// заносим в ul
 		ulElement.appendChild(liElement);
 	}
+	// Проверяем при загрузке данных, есть ли что то в ul
 	checkList()
 }
 
@@ -88,7 +101,6 @@ function openItemOptions() {
 		// Если нажата penBtn, то показать модалку
 		if (penBtn) {
 
-			const modalElem = document.querySelector('.modal')
 			const dataLocalStorage = JSON.parse(localStorage.getItem('hero__item'));
 			if (!dataLocalStorage ) return;
 
@@ -119,11 +131,13 @@ function openItemOptions() {
 			
 			liElement.remove();
 			checkList();
-			saveAllItem();
 		}
 	});
 }
 
-checkList();
-openItemOptions();
-loadLocalStorage();
+document.addEventListener('DOMContentLoaded', () => {
+	loadLocalStorage();
+	openItemOptions();
+	checkList();
+});
+

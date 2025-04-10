@@ -9,7 +9,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 	const btnApply = document.querySelector('[data-btn-apply]');
 	const inputElement = document.querySelector('[data-modal-input]');
-
+	
 	// Прописываем модалки изначальные стили
 	modalElem.style.cssText = `
 		display: flex;
@@ -52,7 +52,26 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		// Удаляем обработчик событий для кнопки, чтобы не было висячего обработчика
 		window.removeEventListener('keydown',closeModal);
 	}
+	function warningDublicate() {
+		let warningText = inputElement.parentNode.querySelector('.modal__text');
+		const noteTitle = inputElement.value.trim();
+		
+		if (noteTitle === '') {
+			warningWrapper('The input field is empty','Enter the task name',1500)
+			return false
+		} else if (noteTitle.length > 50) {
+			warningWrapper ('The text is more than 50 characters long')
+			return false
+		}
 
+		inputElement.classList.remove('input__warning')
+		btnApply.disabled = false;
+
+		if (warningText) {
+			warningText.remove();
+		}
+		return true
+	}
 	// Функция закрытия 
 	const closeModal = event => {
 		const target = event.target;
@@ -62,7 +81,6 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 			hiddenModal()
 		}
 	}
-	
 	// Функция открытия модалки
 	function showModal () {
 		/*
@@ -73,7 +91,6 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		modalElem.style.opacity = 1;
 		window.addEventListener('keydown',closeModal)
 	}
-
 	// Функция на создание динамического элемента
 	function createItem () {
 		/*
@@ -88,7 +105,6 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		*/
 		let noteTitle = inputElement.value.trim();
 		let warningText = inputElement.parentNode.querySelector('.modal__text');
-
 		/*
 		Если пустая строка и возвращаем результат
 		*/
@@ -146,9 +162,35 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 
 			saveAllItem()
 			hiddenModal()
-
 			checkList()
 		}
+	}
+	function editItem() {
+		const noteTitle = inputElement.value.trim();
+		const titleElement = currentEditItem.querySelector('.hero__title');
+		const oldTitle = titleElement.textContent.trim();
+		const newTitle = noteTitle;
+
+		if(!warningDublicate()) return;
+		
+		titleElement.textContent = newTitle;
+		
+		let storedData = JSON.parse(localStorage.getItem('hero__item'));
+		
+		if (storedData.hasOwnProperty(oldTitle)) {
+			delete storedData[oldTitle];
+		}
+		
+		storedData[newTitle] = currentEditItem.querySelector('.input__checkbox').checked;
+		localStorage.setItem('hero__item', JSON.stringify(storedData));
+		
+		window.currentEditItem = null;
+		
+		inputElement.value = '';
+		
+		hiddenModal();
+		saveAllItem()
+		checkList();
 	}
 	function saveAllItem() {
 		const items = document.querySelectorAll('.hero__item');
@@ -170,7 +212,13 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	inputElement.addEventListener('input', () => {
 		btnApply.disabled = inputElement.value.trim() === '';
 	})
-	btnApply.addEventListener('click',createItem);
+	btnApply.addEventListener('click',() => {
+		if (currentEditItem) {
+			editItem();
+		} else {
+			createItem()
+		}
+	});
 	
 	btnElemOpen.addEventListener('click', showModal);
 	modalElem.addEventListener('click', closeModal);

@@ -1,5 +1,5 @@
 // Импортируем showModal
-import { showModal,saveAllItem } from "./modal.js";
+import { showModal } from "./modal.js";
 
 // Функция для проверки содержимого
 export function checkList () {
@@ -9,6 +9,8 @@ export function checkList () {
 	const emptyImg = ulElement.querySelector('.hero__empty-img');
 	const emptyText = ulElement.querySelector('.hero__empty-description');
 
+	// Так как дочерние элементы ul не являются массивами, переводим в массив
+	// и используем filter, где, фильтруем, если нет элементов с классом, убрать
 	const actualChildren = Array.from(ulElement.children).filter(child => 
 		!child.classList.contains('hero__empty-img') && 
 		!child.classList.contains('hero__empty-description')
@@ -100,17 +102,14 @@ function openItemOptions() {
 
 		// Если нажата penBtn, то показать модалку
 		if (penBtn) {
+			const liElement = penBtn.closest('.hero__item');
+			const titleElement = liElement.querySelector('.hero__title');
+			const title = titleElement.textContent.trim();
+			const inputElem = document.querySelector('[data-modal-input]');
 
-			const dataLocalStorage = JSON.parse(localStorage.getItem('hero__item'));
-			if (!dataLocalStorage ) return;
+			inputElem.value = title;
+			currentEditItem = liElement
 
-			const dataEntries = Object.entries(dataLocalStorage);
-
-			for(let key of dataEntries) {
-				const inputDataLocalStorage = document.querySelector('[data-modal-input]');
-
-				inputDataLocalStorage.innerHTML = key;
-			}
 			showModal();
 		}
 		// Если нажата trashBtn, то создать переменную, которая найдёт родительский 
@@ -140,4 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	openItemOptions();
 	checkList();
 });
+
+window.currentEditItem = null;
+
 

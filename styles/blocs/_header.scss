@@ -11,10 +11,33 @@
 		}
 	}
 	&__form {
+		position: relative;
 		display: flex;
 		justify-content: center;
+		height: 38px;
 		column-gap: var(--block-padding-x);
+
+		&::before {
+			content: '';
+			@include square(21px);
+			position: absolute;
+			top: 50%;
+			left: 74%;
+			transform: translateY(-50%);
+			background: url('/icon/Lypa-light.svg') center/contain no-repeat;
+			pointer-events: none;
+		}
 		
+		.darkmode &::before {
+			content: '';
+			@include square(21px);
+			position: absolute;
+			top: 50%;
+			left: 74%;
+			transform: translateY(-50%);
+			background: url('/icon/Lypa-dark.svg') center/contain no-repeat;
+			pointer-events: none;
+		}
 		@include mobile {
 			flex-wrap: wrap;
 			justify-content: center;
@@ -24,10 +47,14 @@
 
 	&__input {
 		width: 595px;
+		padding-right: 43px;
+
+
 		@include mobile {
 			width: 725px;
 			max-width: 100%;
 		}
+		
 	}
 
 }

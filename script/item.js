@@ -1,8 +1,24 @@
 // Импортируем showModal
 import { showModal } from "./modal.js";
 
+export function saveAllItem() {
+	const items = document.querySelectorAll('.hero__item');
+	let dataItems = JSON.parse(localStorage.getItem('hero__item')) || {};
+
+	items.forEach(item => {
+		const title = item.querySelector('.hero__title');
+		const checkbox = item.querySelector('.input__checkbox');
+
+		if (title && checkbox) {
+			const text = title.textContent.trim();
+			dataItems[text] = checkbox.checked;
+		}
+	});
+
+	localStorage.setItem('hero__item', JSON.stringify(dataItems));
+}
 // Функция для проверки содержимого
-export function checkList () {
+export function checkList() {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 		
 	// Находим существующие элементы
@@ -36,7 +52,6 @@ export function checkList () {
 		emptyText?.remove();
 	}
 }
-
 function loadLocalStorage() {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 	// Достаём из JSON ключ
@@ -45,7 +60,7 @@ function loadLocalStorage() {
 	// Если нет ключа, то вернуть, чтоб ошибки не было
 	if (!parseJSONElement ) {
 		ulElement.innerHTML = '';
-		checkList(); // Важно: вызов здесь!
+		checkList();
 		return;
 	} ;
 
@@ -61,7 +76,7 @@ function loadLocalStorage() {
 		// задаём внутренности
 		liElement.innerHTML = `
 			<form class="hero__description">
-				<input class="hero__input input input__checkbox" type="checkbox" ${value ? 'checked' : ''}>
+				<input class="hero__input input input__checkbox" type="checkbox">
 				<h2 class="hero__title">${key}</h2>
 			</form>
 			<div class="hero__option">
@@ -82,6 +97,13 @@ function loadLocalStorage() {
 			</div>
 			`;
 		// заносим в ul
+		const checkbox = liElement.querySelector('.input__checkbox');
+		checkbox.checked = value;
+		if (value) {
+			const title = liElement.querySelector('.hero__title');
+			title.classList.add('complete');
+			checkbox.classList.add('complete');
+		}
 		ulElement.appendChild(liElement);
 	}
 	// Проверяем при загрузке данных, есть ли что то в ul
@@ -134,12 +156,70 @@ function openItemOptions() {
 	});
 }
 
+function loadInputItem() {
+	const inputElement = document.querySelector('[data-input-search]');
+	
+	inputElement.oninput = function () {
+	
+		let val = this.value.trim()
+		let elementList = document.querySelectorAll('[data-hero-ul-list] > li');
+	
+		if(val != '') {
+			elementList.forEach(function (elem) {
+				if(elem.innerText.search(val) === -1) {
+					elem.classList.add('hide');
+				} else {
+					elem.classList.remove('hide');
+				}
+			});
+		} else {
+			elementList.forEach(function (elem) {
+				elem.classList.remove('hide');
+			})
+		}
+	}
+	inputElement.addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			loadInputItem()
+		}
+	});
+}
+
+function checkboxChecked() {
+	const ulElement = document.querySelector('[data-hero-ul-list]');
+
+	if (!ulElement) return;
+
+	ulElement.addEventListener('change', event => {
+		if (event.target.type === 'checkbox') {
+			// Находим родительский элемент и связанные элементы
+			const checkbox = event.target;
+			const heroItem = checkbox.closest('.hero__item');
+			const title = heroItem.querySelector('.hero__title');
+
+			// Применяем стили к текущим элементам
+			if (checkbox.checked) {
+				title.classList.add('complete');
+				checkbox.classList.add('complete');
+			} else {
+				title.classList.remove('complete');
+				checkbox.classList.remove('complete');
+			}
+			
+			saveAllItem();
+		}
+	});
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
 	loadLocalStorage();
+	checkboxChecked()
+	loadInputItem()
 	openItemOptions();
 	checkList();
-});
+});	
 
 window.currentEditItem = null;
-
 

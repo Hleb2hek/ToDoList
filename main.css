@@ -185,6 +185,13 @@ svg * {
   border-color: currentColor;
 }
 
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+  display: none;
+}
+
 /**
 	Удаляем все анимации и переходы для людей,
 	которые предпочитают их не использовать
@@ -387,10 +394,6 @@ h2 {
 }
 .input.input__checkbox:focus {
   outline: none;
-  content: "";
-  position: relative;
-  background: url("/icon/galka.svg") center no-repeat;
-  background-color: var(--color-purple);
 }
 @media (hover: hover) {
   .input.input__checkbox:hover {
@@ -547,9 +550,33 @@ h2 {
   margin-bottom: var(--block-padding-y);
 }
 .header__form {
+  position: relative;
   display: flex;
   justify-content: center;
+  height: 38px;
   column-gap: var(--block-padding-x);
+}
+.header__form::before {
+  content: "";
+  width: 21px;
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  left: 74%;
+  transform: translateY(-50%);
+  background: url("/icon/Lypa-light.svg") center/contain no-repeat;
+  pointer-events: none;
+}
+.darkmode .header__form::before {
+  content: "";
+  width: 21px;
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  left: 74%;
+  transform: translateY(-50%);
+  background: url("/icon/Lypa-dark.svg") center/contain no-repeat;
+  pointer-events: none;
 }
 @media (max-width: 735px) {
   .header__form {
@@ -560,6 +587,7 @@ h2 {
 }
 .header__input {
   width: 595px;
+  padding-right: 43px;
 }
 @media (max-width: 735px) {
   .header__input {
@@ -601,8 +629,33 @@ h2 {
 .hero__item:not(:last-child) {
   border-bottom: 1px solid color-mix(in srgb, var(--color-purple) 50%, transparent);
 }
+.hero__item.hide {
+  display: none;
+}
 .hero__description {
   align-items: center;
+}
+.hero__title.complete {
+  position: relative;
+  color: var(--color-accent);
+  opacity: 0.5;
+  transition-duration: inherit;
+}
+.hero__title.complete::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+}
+.hero__input.complete {
+  outline: none;
+  content: "";
+  position: relative;
+  background: url("/icon/galka.svg") center no-repeat;
+  background-color: var(--color-purple);
 }
 .hero__btn {
   align-self: end;

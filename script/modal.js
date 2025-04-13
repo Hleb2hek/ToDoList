@@ -1,4 +1,4 @@
-import { checkList } from "./item.js";
+import { checkList,saveAllItem } from "./item.js";
 
 export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 
@@ -45,9 +45,16 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	}
 	function hiddenModal () {
 		modalElem.style.opacity = 0;
-		// Через 200ms модалка красиво исчезнет 
+		// Через 200ms модалка красиво исчезнет
 		setTimeout(() => {
 			modalElem.style.visibility = 'hidden';
+
+			const warningText = inputElement.parentNode.querySelector('.modal__text');
+
+			if(warningText) warningText.remove();
+			inputElement.classList.remove('input__warning');
+			inputElement.value = '';
+			btnApply.disabled = false;
 		}, 200);
 		// Удаляем обработчик событий для кнопки, чтобы не было висячего обработчика
 		window.removeEventListener('keydown',closeModal);
@@ -89,6 +96,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		*/
 		modalElem.style.visibility = 'visible';
 		modalElem.style.opacity = 1;
+
 		window.addEventListener('keydown',closeModal)
 	}
 	// Функция на создание динамического элемента
@@ -99,30 +107,16 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		*/
 		let liElement = document.createElement('li');
 		liElement.className ='hero__item';
-		/*
-		Полученое значение мы обрабатываем от пробелов
-		Находим родительский элемент inputElement через .modal__text
-		*/
-		let noteTitle = inputElement.value.trim();
 		let warningText = inputElement.parentNode.querySelector('.modal__text');
-		/*
-		Если пустая строка и возвращаем результат
-		*/
-		if (noteTitle === '') {
-			warningWrapper('The input field is empty','Enter the task name',1500)
-			return
-		/*
-		Если строка превышает 30 символов
-		возвращаем результат
-		*/
-		} else if (noteTitle.length > 50) {
-			warningWrapper ('The text is more than 50 characters long')
+
+		if(!warningDublicate()) {
 			return
 		} else {
 			/*
 			Если нет пустой строки, то убираем класс 
 			и зазблокируем кнопку
 			*/
+			let noteTitle = inputElement.value.trim();
 			inputElement.classList.remove('input__warning')
 			btnApply.disabled = false;
 	
@@ -137,7 +131,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 			*/
 			liElement.innerHTML = `
 					<form class="hero__description">
-						<input class="hero__input input input__checkbox" type="checkbox" id="" >
+						<input class="hero__input input input__checkbox" type="checkbox" >
 						<h2 class="hero__title">${noteTitle}</h2>
 					</form>
 					<div class="hero__option">
@@ -157,12 +151,12 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 						</button>
 					</div>
 			`;
-			ulElement.appendChild(liElement);
-			inputElement.value = '';
 
+			ulElement.appendChild(liElement);
+
+			checkList()
 			saveAllItem()
 			hiddenModal()
-			checkList()
 		}
 	}
 	function editItem() {
@@ -192,22 +186,6 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 		saveAllItem()
 		checkList();
 	}
-	function saveAllItem() {
-		const items = document.querySelectorAll('.hero__item');
-		let dataItems = JSON.parse(localStorage.getItem('hero__item')) || {};
-	
-		items.forEach(item => {
-			const title = item.querySelector('.hero__title');
-			const checkbox = item.querySelector('.input__checkbox');
-	
-			if (title && checkbox) {
-				const text = title.textContent.trim();
-				dataItems[text] = checkbox.checked;
-			}
-		});
-	
-		localStorage.setItem('hero__item', JSON.stringify(dataItems));
-	}
 
 	inputElement.addEventListener('input', () => {
 		btnApply.disabled = inputElement.value.trim() === '';
@@ -222,6 +200,12 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	
 	btnElemOpen.addEventListener('click', showModal);
 	modalElem.addEventListener('click', closeModal);
+	inputElement.addEventListener('keydown', event => {
+		if(event.code === 'Enter') {
+
+			createItem()
+		}
+	})
 
 	return { showModal }
 
@@ -233,4 +217,4 @@ const modal = modalController({
 	modalWindow: '[data-modal]'
 });
 
-export const { showModal,saveAllItem } = modal;
+export const { showModal } = modal;

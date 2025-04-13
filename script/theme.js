@@ -11,10 +11,6 @@ const themeMode = function () {
 	function enebleDarkMode () {
 		document.body.classList.add('darkmode');
 		localStorage.setItem('darkmode','active');
-
-		// проверка на наличие ключа 'darkmode' и значения 'active'
-		console.log('darkmode' in localStorage);
-		console.log(localStorage.darkmode);
 	}
 
 	function disableDarkmode () {
@@ -22,10 +18,6 @@ const themeMode = function () {
 		// Сохраняем в localStorage ключ 'darkmode' и значение 'active'
 		document.body.classList.remove('darkmode');
 		localStorage.setItem('darkmode',null);
-
-		// проверка на наличие ключа 'darkmode' и значения 'null'
-		console.log('darkmode' in localStorage);
-		console.log(localStorage.darkmode);
 	}
 
 	// Если у darkmode есть active, то включи тёмную тему

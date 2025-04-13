@@ -1,5 +1,6 @@
 @use '../base/index' as *;
 
+
 .input {
 	@include fluid-text(16,14);
 
@@ -35,10 +36,6 @@
 		
 		&:focus {
 			outline: none;
-			content: "";
-			position: relative;
-			background: url("/icon/galka.svg") center no-repeat;
-			background-color: var(--color-purple);
 		}
 		@include hover {
 			border: 2px solid var(--color-purple);

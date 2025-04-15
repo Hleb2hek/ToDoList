@@ -1,4 +1,4 @@
-import { checkList,saveAllItem } from "./item.js";
+import { saveAllItem,checkList } from "./storage.js";
 
 export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 
@@ -10,7 +10,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	const btnApply = document.querySelector('[data-btn-apply]');
 	const inputElement = document.querySelector('[data-modal-input]');
 	
-	// Прописываем модалки изначальные стили
+	// Прописываем модалке изначальные стили
 	modalElem.style.cssText = `
 		display: flex;
 		visibility: hidden;
@@ -202,8 +202,11 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 	modalElem.addEventListener('click', closeModal);
 	inputElement.addEventListener('keydown', event => {
 		if(event.code === 'Enter') {
-
-			createItem()
+			if (currentEditItem) {
+				editItem();
+			} else {
+				createItem()
+			}
 		}
 	})
 

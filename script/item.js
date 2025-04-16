@@ -10,7 +10,9 @@ function handleItemActions() {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 	// Выделяем инпут модалки
 	const inputElem = document.querySelector('[data-modal-input]');
-
+	const optionElem = document.querySelector('[data-option]');
+	console.log(optionElem);
+	
 	// Вешаем событие, которое при клике отсылается к нажатию на модалку или удаление
 	ulElement.addEventListener('click', (event) => {
 		const target = event.target;
@@ -53,7 +55,7 @@ function handleItemActions() {
 			checkList();
 		}
 	});
-}
+};
 
 // Функция, для поиска в инпуте подходящей таски через живой поиск
 function handleSearchFilter() {
@@ -94,7 +96,7 @@ function handleSearchFilter() {
 			handleSearchFilter()
 		}
 	});
-}
+};
 
 // Функция состояния секбокса
 function toggleCheckboxCompletion() {
@@ -123,8 +125,33 @@ function toggleCheckboxCompletion() {
 			saveAllItem();
 		}
 	});
-}
+};
 
-toggleCheckboxCompletion()
-handleSearchFilter()
+function filtreItem() {
+	const btnOption = document.querySelector('[data-select]');
+		
+	btnOption.addEventListener('change', () => {
+		// Получаем актуальные данные из localStorage
+		const storageList = JSON.parse(localStorage.getItem('hero__item')) || {};
+		// Обновляем список элементов при каждом изменении
+		const liElements = document.querySelectorAll('[data-hero-ul-list] > li');
+		const selected = btnOption.selectedIndex;
+		
+		liElements.forEach(elem => {
+			const text = elem.textContent.trim();
+			const isDone = storageList[text];
+			
+			if (selected === 0) {
+				elem.style.display = '';
+			} else if (selected === 1) {
+				elem.style.display = isDone ? '' : 'none';
+			} else if (selected === 2) {
+				elem.style.display = !isDone ? '' : 'none';
+			}
+		});
+	});
+}
+filtreItem();
+toggleCheckboxCompletion();
+handleSearchFilter();
 handleItemActions();

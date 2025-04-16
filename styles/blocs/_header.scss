@@ -6,6 +6,8 @@
 		text-align: center;
 	}
 	&__title {
+		@include select;
+
 		&:not(:last-child) {
 			margin-bottom: var(--block-padding-y);
 		}
@@ -18,8 +20,9 @@
 		column-gap: var(--block-padding-x);
 
 		&::before {
-			content: '';
 			@include square(21px);
+
+			content: '';
 			position: absolute;
 			top: 50%;
 			left: 74%;

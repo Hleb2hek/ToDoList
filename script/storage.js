@@ -15,7 +15,7 @@ export function saveAllItem() {
 		if (title && checkbox) {
 			// Новая переменная в которой всему текстовому элименту обрезают пробелы
 			const text = title.textContent.trim();
-			// в localStorage находим по ключу активный или не активный чекбокс
+			// Заносим в dataItems ключ ввиде названия, а значение ввиде состояние чекбокса
 			dataItems[text] = checkbox.checked;
 		}
 	});

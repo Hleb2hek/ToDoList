@@ -11,7 +11,6 @@ function handleItemActions() {
 	// Выделяем инпут модалки
 	const inputElem = document.querySelector('[data-modal-input]');
 	const optionElem = document.querySelector('[data-option]');
-	console.log(optionElem);
 	
 	// Вешаем событие, которое при клике отсылается к нажатию на модалку или удаление
 	ulElement.addEventListener('click', (event) => {

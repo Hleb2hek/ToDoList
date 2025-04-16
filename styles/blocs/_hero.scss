@@ -16,6 +16,10 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
+
+		@include mobile {
+			margin-top: 20%;
+		}
 	}
 	
 	&__list {

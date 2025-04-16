@@ -575,6 +575,11 @@ h2 {
   background: url("../icon/ui/Lypa-light.svg") center/contain no-repeat;
   pointer-events: none;
 }
+@media (max-width: 735px) {
+  .header__form::before {
+    left: 92%;
+  }
+}
 .darkmode .header__form::before {
   content: "";
   width: 21px;
@@ -596,7 +601,7 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: var(--block-padding-y);
-    margin-bottom: 20%;
+    margin-bottom: 10%;
   }
 }
 .header__input {
@@ -626,11 +631,6 @@ h2 {
   display: flex;
   justify-content: center;
   width: 100%;
-}
-@media (max-width: 735px) {
-  .hero__menu {
-    margin-top: 20%;
-  }
 }
 .hero__list {
   width: 100%;

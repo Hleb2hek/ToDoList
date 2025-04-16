@@ -29,6 +29,9 @@
 			transform: translateY(-50%);
 			background: url('../icon/ui/Lypa-light.svg') center/contain no-repeat;
 			pointer-events: none;
+			@include mobile {
+				left: 92%;
+			}
 		}
 		
 		.darkmode &::before {
@@ -48,7 +51,7 @@
 			flex-wrap: wrap;
 			justify-content: center;
 			row-gap: var(--block-padding-y);
-			margin-bottom: 20%;
+			margin-bottom: 10%;
 		}
 	}
 

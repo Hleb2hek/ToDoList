@@ -44,7 +44,7 @@ export function checkList() {
 		// Добавляем элементы, только если их еще нет
 		if (!emptyImg && !emptyText) {
 			const existImg = document.createElement('img');
-			existImg.src = './icon/Detective-light.svg';
+			existImg.src = './icon/ui/Detective-light.svg';
 			existImg.className = 'hero__empty-img';
 
 			const existText = document.createElement('div');

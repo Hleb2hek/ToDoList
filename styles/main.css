@@ -208,21 +208,21 @@ input[type=search]::-webkit-search-results-decoration {
 }
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/inter-regular.woff2") format("woff2");
+  src: url("../fonts/inter-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Kanit";
-  src: url("/fonts/kanit-regular.woff2") format("woff2");
+  src: url("../fonts/kanit-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Kanit";
-  src: url("/fonts/kanit-medium.woff2") format("woff2");
+  src: url("../fonts/kanit-medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;

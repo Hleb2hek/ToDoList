@@ -572,7 +572,7 @@ h2 {
   top: 50%;
   left: 74%;
   transform: translateY(-50%);
-  background: url("./icon/ui/Lypa-light.svg") center/contain no-repeat;
+  background: url("icon/ui/Lypa-light.svg") center/contain no-repeat;
   pointer-events: none;
 }
 .darkmode .header__form::before {
@@ -583,7 +583,7 @@ h2 {
   top: 50%;
   left: 74%;
   transform: translateY(-50%);
-  background: url("./icon/ui/Lypa-dark.svg") center/contain no-repeat;
+  background: url("icon/ui/Lypa-dark.svg") center/contain no-repeat;
   pointer-events: none;
 }
 @media (max-width: 735px) {
@@ -662,7 +662,7 @@ h2 {
   outline: none;
   content: "";
   position: relative;
-  background: url("./icon/ui/galka.svg") center no-repeat;
+  background: url("icon/ui/galka.svg") center no-repeat;
   background-color: var(--color-purple);
 }
 .hero__btn {

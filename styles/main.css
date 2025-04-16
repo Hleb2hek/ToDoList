@@ -601,7 +601,7 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: var(--block-padding-y);
-    margin-bottom: 10%;
+    margin-bottom: 15%;
   }
 }
 .header__input {

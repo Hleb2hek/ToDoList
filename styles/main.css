@@ -581,6 +581,11 @@ h2 {
     left: 92%;
   }
 }
+@media (max-width: 340px) {
+  .header__form::before {
+    left: 85%;
+  }
+}
 .darkmode .header__form::before {
   content: "";
   width: 21px;
@@ -596,6 +601,11 @@ h2 {
   .darkmode .header__form::before {
     top: 20%;
     left: 92%;
+  }
+}
+@media (max-width: 340px) {
+  .darkmode .header__form::before {
+    left: 85%;
   }
 }
 @media (max-width: 735px) {
@@ -636,6 +646,7 @@ h2 {
 }
 .hero__list {
   width: 100%;
+  transition: height 0.3s ease-in-out;
 }
 .hero__description {
   display: flex;
@@ -646,6 +657,12 @@ h2 {
   align-items: center;
   justify-content: space-between;
   padding-block: 17px;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero__item.removing {
+  opacity: 0;
+  transform: translateX(-100px);
+  pointer-events: none;
 }
 .hero__item:not(:last-child) {
   border-bottom: 1px solid color-mix(in srgb, var(--color-purple) 50%, transparent);
@@ -656,20 +673,29 @@ h2 {
 .hero__description {
   align-items: center;
 }
-.hero__title.complete {
+.hero__title {
   position: relative;
-  color: var(--color-accent);
-  opacity: 0.5;
-  transition-duration: inherit;
+  display: inline-block;
+  overflow: hidden;
 }
-.hero__title.complete::before {
+.hero__title::before {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: currentColor;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-duration) cubic-bezier(0.1, 0.1, 0.1, 0.1);
+}
+.hero__title.complete {
+  opacity: 0.5;
+}
+.hero__title.complete::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 .hero__input.complete {
   outline: none;

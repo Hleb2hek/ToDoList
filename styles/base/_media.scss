@@ -13,6 +13,13 @@ $mobile: 735px;
 	}
 };
 
+@mixin another($px) {
+	@media (max-width: $px) {
+		@content
+	}
+};
+
+
 // Миксин для адаптации hover
 @mixin hover {
 	// Если медиа запрос поддерживает hover, то будет 

@@ -159,6 +159,7 @@ export const modalController = function ({btnOpen,btnClose,modalWindow}) {
 			hiddenModal()
 		}
 	}
+	// Функция для редактирования таски
 	function editItem() {
 		const noteTitle = inputElement.value.trim();
 		const titleElement = currentEditItem.querySelector('.hero__title');

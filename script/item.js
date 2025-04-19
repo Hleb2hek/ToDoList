@@ -33,24 +33,26 @@ function handleItemActions() {
 
 			showModal();
 		}
+		// В обработчике клика на корзину
 		if (trashBtn) {
-			// Находим hero__item относительно trashBtn
 			const liElement = trashBtn.closest('.hero__item');
-			// Выделяем hero__title и обрабатываем текстовое содержимое от пробелов
-			const titleElement = liElement.querySelector('.hero__title').textContent.trim();
-			// Переменная с распасенным JSON элементом , либо создаёт пустой объект
-			const storedData = JSON.parse(localStorage.getItem('hero__item')) || {};
-
-			// Проверяем есть ли элемент в объекте
-			if (storedData.hasOwnProperty(titleElement)) {
-				// Удаляем по названию и обновляем хранилище
-				delete storedData[titleElement];
-				localStorage.setItem('hero__item', JSON.stringify(storedData));
-			}
-			// Удаляем визуально элемент
-			liElement.remove();
-			// Проверяем на наличие элементов
-			checkList();
+	
+			// Добавляем класс для анимации
+			liElement.classList.add('removing');
+	
+			// Удаляем после завершения анимации
+			setTimeout(() => {
+				const titleElement = liElement.querySelector('.hero__title').textContent.trim();
+				const storedData = JSON.parse(localStorage.getItem('hero__item')) || {};
+			
+				if (storedData.hasOwnProperty(titleElement)) {
+						delete storedData[titleElement];
+						localStorage.setItem('hero__item', JSON.stringify(storedData));
+				}
+			
+				liElement.remove();
+				checkList();
+			}, 400); // Должно совпадать с временем анимации
 		}
 	});
 };
@@ -96,7 +98,7 @@ function handleSearchFilter() {
 	});
 };
 
-// Функция состояния секбокса
+// Функция состояния чекбокса
 function toggleCheckboxCompletion() {
 	// Выделяем ul
 	const ulElement = document.querySelector('[data-hero-ul-list]');
@@ -125,24 +127,36 @@ function toggleCheckboxCompletion() {
 	});
 };
 
+// Функция для фильрации элементов на категории
 function filtreItem() {
+	// Выделяем select
 	const btnOption = document.querySelector('[data-select]');
 		
+	// Навешиваем обработчик на изменение состояния в select
 	btnOption.addEventListener('change', () => {
 		// Получаем актуальные данные из localStorage
 		const storageList = JSON.parse(localStorage.getItem('hero__item')) || {};
 		// Обновляем список элементов при каждом изменении
 		const liElements = document.querySelectorAll('[data-hero-ul-list] > li');
+		// Для красоты выносим в отдельную переменную индексы select
 		const selected = btnOption.selectedIndex;
 		
+		// Проходимся по li
 		liElements.forEach(elem => {
+			// Достаём текстовые элементы
 			const text = elem.textContent.trim();
+			console.log(text);
+			// А также из хранилище состояние чекбокса
 			const isDone = storageList[text];
 			
+			// Если индекс select 0, то сделать видимым
 			if (selected === 0) {
 				elem.style.display = '';
+			// Если индекс select 1, то если состояния isDone true, выполнить
+			// первое условие, которое делает его видымым, если false, то уберает из видимости
 			} else if (selected === 1) {
 				elem.style.display = isDone ? '' : 'none';
+			// Всё то же самое, но только противоположно
 			} else if (selected === 2) {
 				elem.style.display = !isDone ? '' : 'none';
 			}

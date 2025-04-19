@@ -33,6 +33,10 @@
 				top: 20%;
 				left: 92%;
 			}
+
+			@include another(340px) {
+				left: 85%;
+			}
 		}
 		
 		.darkmode &::before {
@@ -47,6 +51,9 @@
 			@include mobile {
 				top: 20%;
 				left: 92%;
+			}
+			@include another(340px) {
+				left: 85%;
 			}
 		}
 		@include mobile {

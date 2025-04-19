@@ -577,6 +577,7 @@ h2 {
 }
 @media (max-width: 735px) {
   .header__form::before {
+    top: 20%;
     left: 92%;
   }
 }
@@ -593,15 +594,16 @@ h2 {
 }
 @media (max-width: 735px) {
   .darkmode .header__form::before {
+    top: 20%;
     left: 92%;
   }
 }
 @media (max-width: 735px) {
   .header__form {
+    height: 0%;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: var(--block-padding-y);
-    margin-bottom: 18%;
   }
 }
 .header__input {

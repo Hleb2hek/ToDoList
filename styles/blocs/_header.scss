@@ -30,6 +30,7 @@
 			background: url('../icon/ui/Lypa-light.svg') center/contain no-repeat;
 			pointer-events: none;
 			@include mobile {
+				top: 20%;
 				left: 92%;
 			}
 		}
@@ -44,14 +45,15 @@
 			background: url('../icon/ui/Lypa-dark.svg') center/contain no-repeat;
 			pointer-events: none;
 			@include mobile {
+				top: 20%;
 				left: 92%;
 			}
 		}
 		@include mobile {
+			height: 0%;
 			flex-wrap: wrap;
 			justify-content: center;
 			row-gap: var(--block-padding-y);
-			margin-bottom: 18%;
 		}
 	}
 

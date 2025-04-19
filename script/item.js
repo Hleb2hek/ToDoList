@@ -10,7 +10,6 @@ function handleItemActions() {
 	const ulElement = document.querySelector('[data-hero-ul-list]');
 	// Выделяем инпут модалки
 	const inputElem = document.querySelector('[data-modal-input]');
-	const optionElem = document.querySelector('[data-option]');
 	
 	// Вешаем событие, которое при клике отсылается к нажатию на модалку или удаление
 	ulElement.addEventListener('click', (event) => {
